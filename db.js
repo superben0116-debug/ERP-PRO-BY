@@ -1,16 +1,14 @@
-import pg from 'pg';
-const { Pool } = pg;
+import mysql from 'mysql2/promise';
 
-const pool = new Pool({
+const pool = mysql.createPool({
   host: process.env.DB_HOST || 'localhost',
-  port: process.env.DB_PORT || 5432,
-  user: process.env.DB_USER || 'postgres',
-  password: process.env.DB_PASSWORD || 'postgres',
-  database: process.env.DB_NAME || 'erp_pro'
-});
-
-pool.on('error', (err) => {
-  console.error('Unexpected error on idle client', err);
+  port: process.env.DB_PORT || 3306,
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || 'root',
+  database: process.env.DB_NAME || 'erp_pro',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
 export default pool;
